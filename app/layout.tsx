@@ -11,11 +11,12 @@ export const metadata: Metadata = {
   description: 'Navaneeth Core Cutting Service provides core cutting, wall cutting, slab cutting, drilling and concrete cutting services in Miyapur and nearby areas.',
   keywords: ['core cutting Miyapur', 'concrete cutting Miyapur', 'AC hole cutting Miyapur', 'wall cutting service'],
   generator: 'v0.app',
+  icons: { icon: '/favicon.svg' },
 }
 
 export const viewport: Viewport = {
   colorScheme: 'light',
-  themeColor: '#111827',
+  themeColor: '#0B2A4A',
   width: 'device-width',
   initialScale: 1,
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ArrowRight, Check, ChevronDown, Drill, MapPin, Menu, MessageCircle, Phone, Send, X } from 'lucide-react'
+import { ArrowRight, Check, ChevronDown, MapPin, Menu, MessageCircle, Phone, Send, X } from 'lucide-react'
 
 const phone = '+91 90004 77316'
 const tel = 'tel:+919000477316'
@@ -40,7 +40,7 @@ export default function Page() {
   return <main id="home">
     <div className="top-strip"><div className="site-shell"><span>Core cutting & concrete cutting service in Miyapur</span><a href={tel}>Call {phone} <Phone size={13} /></a></div></div>
     <header className="site-header"><div className="site-shell header-inner">
-      <a href="#home" className="brand" onClick={closeMenu}><span className="brand-mark"><Drill size={22} /></span><span><strong>NAVANEETH</strong><small>Core Cutting Service</small></span></a>
+      <a href="#home" className="brand" onClick={closeMenu}><img className="brand-logo" src="/logo.svg" alt="Navaneeth Core Cutting Service" /></a>
       <nav className={menuOpen ? 'nav open' : 'nav'} aria-label="Main navigation"><a href="#home" onClick={closeMenu}>Home</a><a href="#services" onClick={closeMenu}>Services</a><a href="#projects" onClick={closeMenu}>Projects</a><a href="#equipment" onClick={closeMenu}>Equipment</a><a href="#areas" onClick={closeMenu}>Service Areas</a><a href="#contact" onClick={closeMenu}>Contact</a></nav>
       <div className="header-actions"><a href={whatsapp} className="btn btn-outline"><MessageCircle size={16} /> WhatsApp</a><a href={tel} className="btn btn-dark"><Phone size={16} /> Call Now</a></div>
       <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'Close menu' : 'Open menu'}>{menuOpen ? <X /> : <Menu />}</button>
