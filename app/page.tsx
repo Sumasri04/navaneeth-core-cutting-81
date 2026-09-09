@@ -1,102 +1,72 @@
 'use client'
 
 import { useState } from 'react'
-import {
-  ArrowRight,
-  BadgeCheck,
-  Check,
-  ChevronDown,
-  ChevronUp,
-  CircleCheck,
-  Clock3,
-  Drill,
-  HardHat,
-  MapPin,
-  Menu,
-  MessageCircle,
-  Phone,
-  Ruler,
-  Send,
-  ShieldCheck,
-  X,
-} from 'lucide-react'
+import { ArrowRight, Check, ChevronDown, Drill, MapPin, Menu, MessageCircle, Phone, Send, X } from 'lucide-react'
 
 const phone = '+91 90004 77316'
-const whatsapp = 'https://wa.me/919000477316?text=Hi%20Navaneeth%20Core%20Cutting%20Service%2C%20I%20need%20a%20quote.'
+const tel = 'tel:+919000477316'
+const whatsapp = 'https://wa.me/919000477316?text=Hello%20Navaneeth%20Core%20Cutting%20Service%2C%20I%20need%20a%20quotation%20for%20core%20cutting%2Fconcrete%20cutting%20work.'
 
 const services = [
-  { icon: Drill, title: 'Core Cutting', text: 'Precise circular cuts through concrete slabs, walls and foundations for plumbing, electrical and HVAC work.' },
-  { icon: Ruler, title: 'Wall & Slab Cutting', text: 'Controlled sawing for clean openings, expansion joints and structural modifications.' },
-  { icon: ShieldCheck, title: 'Diamond Drilling', text: 'Low-vibration drilling for reinforced concrete with accurate sizing and minimal disruption.' },
-  { icon: HardHat, title: 'Concrete Breaking', text: 'Targeted breaking and removal support for renovations, repairs and site preparation.' },
+  ['Core Cutting', 'Clean circular openings through concrete for services and construction work.', '/images/core-cutting.png'],
+  ['AC Hole Cutting', 'Neat wall openings for air-conditioning lines and outdoor unit connections.', '/images/ac-hole.png'],
+  ['Chimney Hole Cutting', 'Accurate openings for kitchen chimney ducts and ventilation routes.', '/images/ac-hole.png'],
+  ['Plumber Hole Cutting', 'Practical drilling for pipes, drainage and plumbing installations.', '/images/core-cutting.png'],
+  ['Wall Cutting', 'Controlled wall sawing for openings, channels and renovation work.', '/images/wall-cutting.png'],
+  ['Slab Hole Cutting', 'Precise slab openings for plumbing, electrical and service requirements.', '/images/slab-cutting.png'],
+  ['RCC Slab Cutting', 'Diamond cutting support for reinforced concrete slab modifications.', '/images/slab-cutting.png'],
+  ['Gas Pipe Hole Cutting', 'Clean penetrations for gas pipe routing and related site work.', '/images/ac-hole.png'],
 ]
 
+const otherServices = ['RCC Road Cutting', 'Concrete Cutting', 'Concrete Chipping', 'Demolition Services', 'Wire Saw Cutting', 'Wall Saw Cutting', 'Floor Cutting', 'Beam Cutting', 'Stair Cutting', 'Lift Opening Cutting', 'Window & Door Cutting']
 const gallery = [
-  { label: 'Core cutting in progress', size: 'large', file: 'project-core-cutting-01.jpg' },
-  { label: 'Diamond drilling detail', size: 'small', file: 'project-diamond-drilling-02.jpg' },
-  { label: 'Wall opening preparation', size: 'small', file: 'project-wall-cutting-03.jpg' },
-  { label: 'Equipment on site', size: 'wide', file: 'project-equipment-04.jpg' },
+  { title: 'Core cutting', category: 'Core Cutting', image: '/images/core-cutting.png' },
+  { title: 'Wall opening', category: 'Wall Cutting', image: '/images/wall-cutting.png' },
+  { title: 'Slab cutting', category: 'Slab Cutting', image: '/images/slab-cutting.png' },
+  { title: 'AC service opening', category: 'AC & Plumbing Holes', image: '/images/ac-hole.png' },
+  { title: 'Concrete cutting', category: 'Concrete Cutting', image: '/images/slab-cutting.png' },
+  { title: 'Site equipment', category: 'Demolition', image: '/images/equipment.png' },
 ]
+const categories = ['All', 'Core Cutting', 'Wall Cutting', 'Slab Cutting', 'AC & Plumbing Holes', 'Concrete Cutting', 'Demolition']
 
 export default function Page() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [activeImage, setActiveImage] = useState<number | null>(null)
+  const [category, setCategory] = useState('All')
+  const [active, setActive] = useState<(typeof gallery)[number] | null>(null)
   const [sent, setSent] = useState(false)
-
+  const filtered = category === 'All' ? gallery : gallery.filter((item) => item.category === category)
   const closeMenu = () => setMenuOpen(false)
 
-  return (
-    <main className="min-h-screen bg-background text-foreground">
-      <div className="top-strip"><div className="site-shell flex items-center justify-between gap-4"><span>Concrete cutting & diamond drilling in Miyapur, Hyderabad</span><a href={`tel:${phone.replaceAll(' ', '')}`}>Available for site enquiries <Phone size={13} /></a></div></div>
+  return <main id="home">
+    <div className="top-strip"><div className="site-shell"><span>Core cutting & concrete cutting service in Miyapur</span><a href={tel}>Call {phone} <Phone size={13} /></a></div></div>
+    <header className="site-header"><div className="site-shell header-inner">
+      <a href="#home" className="brand" onClick={closeMenu}><span className="brand-mark"><Drill size={22} /></span><span><strong>NAVANEETH</strong><small>Core Cutting Service</small></span></a>
+      <nav className={menuOpen ? 'nav open' : 'nav'} aria-label="Main navigation"><a href="#home" onClick={closeMenu}>Home</a><a href="#services" onClick={closeMenu}>Services</a><a href="#projects" onClick={closeMenu}>Projects</a><a href="#equipment" onClick={closeMenu}>Equipment</a><a href="#areas" onClick={closeMenu}>Service Areas</a><a href="#contact" onClick={closeMenu}>Contact</a></nav>
+      <div className="header-actions"><a href={whatsapp} className="btn btn-outline"><MessageCircle size={16} /> WhatsApp</a><a href={tel} className="btn btn-dark"><Phone size={16} /> Call Now</a></div>
+      <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'Close menu' : 'Open menu'}>{menuOpen ? <X /> : <Menu />}</button>
+    </div></header>
 
-      <header className="sticky top-0 z-40 border-b border-border/80 bg-background/95 backdrop-blur-md">
-        <div className="site-shell flex h-20 items-center justify-between">
-          <a href="#top" onClick={closeMenu} className="flex items-center gap-3" aria-label="Navaneeth Core Cutting Service home">
-            <span className="brand-mark"><Drill size={22} strokeWidth={2.5} /></span>
-            <span><strong className="block font-heading text-base tracking-tight">NAVANEETH</strong><span className="block text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">Core Cutting Service</span></span>
-          </a>
-          <nav className={`${menuOpen ? 'flex' : 'hidden'} absolute left-4 right-4 top-[76px] flex-col gap-1 rounded-lg border border-border bg-card p-3 shadow-xl md:static md:flex md:flex-row md:items-center md:gap-7 md:border-0 md:bg-transparent md:p-0 md:shadow-none`} aria-label="Main navigation">
-            <a href="#services" onClick={closeMenu}>Services</a><a href="#projects" onClick={closeMenu}>Projects</a><a href="#equipment" onClick={closeMenu}>Equipment</a><a href="#areas" onClick={closeMenu}>Service Areas</a><a href="#contact" onClick={closeMenu}>Contact</a>
-          </nav>
-          <div className="hidden items-center gap-3 sm:flex"><a className="btn-secondary" href={whatsapp}><MessageCircle size={17} /> WhatsApp</a><a className="btn-primary" href={`tel:${phone.replaceAll(' ', '')}`}><Phone size={17} /> Call Now</a></div>
-          <button className="rounded-md p-2 md:hidden" onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'Close menu' : 'Open menu'}>{menuOpen ? <X /> : <Menu />}</button>
-        </div>
-      </header>
+    <section className="hero"><div className="site-shell hero-grid"><div className="hero-copy"><p className="eyebrow"><span /> Local concrete cutting service</p><h1>Professional Core Cutting <em>&amp; Concrete Cutting Services</em></h1><p className="hero-lead">Precise core cutting, wall cutting, slab cutting and drilling services for construction, renovation, AC, plumbing and other site requirements.</p><div className="hero-actions"><a href={tel} className="btn btn-yellow"><Phone size={18} /> Call Now</a><a href={whatsapp} className="btn btn-orange" target="_blank" rel="noreferrer"><MessageCircle size={18} /> WhatsApp Us</a></div><p className="hero-phone">Call directly: <a href={tel}>{phone}</a></p></div><ImageFrame src="/images/hero.png" alt="Worker operating a concrete core cutting machine on site" className="hero-photo" /></div></section>
 
-      <section id="top" className="hero-section">
-        <div className="site-shell grid items-center gap-10 py-14 lg:grid-cols-[0.9fr_1.1fr] lg:py-20">
-          <div className="max-w-xl"><p className="eyebrow"><span className="eyebrow-line" /> Local concrete cutting specialists</p><h1 className="font-heading text-balance text-5xl font-extrabold leading-[0.98] tracking-[-0.05em] text-primary-foreground sm:text-6xl lg:text-7xl">Clean cuts.<br /><span className="text-brand-yellow">Solid results.</span></h1><p className="mt-6 max-w-lg text-pretty text-lg leading-8 text-primary-foreground/70">Professional core cutting, wall cutting and diamond drilling for construction, renovation and services work across Miyapur and Hyderabad.</p><div className="mt-8 flex flex-col gap-3 sm:flex-row"><a className="btn-yellow" href={`tel:${phone.replaceAll(' ', '')}`}><Phone size={18} /> Call Now</a><a className="btn-orange" href={whatsapp} target="_blank" rel="noreferrer"><MessageCircle size={18} /> WhatsApp Us</a></div><div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm text-primary-foreground/70"><span className="inline-flex items-center gap-2"><CircleCheck size={16} className="text-brand-yellow" /> Precise site work</span><span className="inline-flex items-center gap-2"><CircleCheck size={16} className="text-brand-yellow" /> Clean, controlled cuts</span></div></div>
-          <ReplaceableImage label="Hero image: concrete core cutting on site" file="hero-concrete-core-cutting.jpg" className="hero-image" />
-        </div>
-      </section>
+    <section id="services" className="section"><div className="site-shell"><SectionIntro kicker="Our services" title="Focused solutions for concrete work" text="Reliable cutting and drilling support for construction, renovation, AC, plumbing and site requirements." /><div className="service-grid">{services.map(([title, text, image]) => <article className="service-card" key={title}><ImageFrame src={image} alt={title} /><div className="service-content"><h3>{title}</h3><p>{text}</p><a href="#contact">Enquire now <ArrowRight size={15} /></a></div></article>)}</div><details className="other-services"><summary>Other Services <ChevronDown size={18} /></summary><div>{otherServices.map((service) => <a href="#contact" key={service}>{service}<ArrowRight size={14} /></a>)}</div></details></div></section>
 
-      <section className="border-b border-border bg-brand-yellow py-4"><div className="site-shell flex flex-col justify-between gap-2 text-sm font-semibold text-primary sm:flex-row"><span>Need a concrete opening?</span><a href="#contact" className="inline-flex items-center gap-2 underline underline-offset-4">Share your site requirement <ArrowRight size={16} /></a></div></section>
+    <section className="dark-section process"><div className="site-shell process-grid"><div><p className="eyebrow yellow"><span /> Easy to get started</p><h2>Tell us what needs to be opened.</h2><p>Share your location and site requirement. We can discuss the suitable cutting or drilling approach for your work.</p><a className="btn btn-yellow" href={whatsapp} target="_blank" rel="noreferrer"><MessageCircle size={18} /> Start on WhatsApp</a></div><div className="steps">{[['01', 'Share details', 'Send location, photos and dimensions.'], ['02', 'Discuss the work', 'We understand the material, access and requirement.'], ['03', 'Send enquiry', 'Choose a convenient time to discuss the job.']].map(([num, title, text]) => <div className="step" key={num}><b>{num}</b><h3>{title}</h3><p>{text}</p></div>)}</div></div></section>
 
-      <section id="services" className="section-padding"><div className="site-shell"><SectionIntro kicker="What we do" title="The right cut for the job" text="Focused concrete services for the openings, modifications and drilling work your site needs." /><div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{services.map(({ icon: Icon, title, text }) => <article className="service-card" key={title}><span className="icon-box"><Icon size={22} /></span><h3 className="mt-6 font-heading text-xl font-bold">{title}</h3><p className="mt-3 text-sm leading-6 text-muted-foreground">{text}</p><a href="#contact" className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-primary">Enquire now <ArrowRight size={15} /></a></article>)}</div></div></section>
+    <section id="equipment" className="section equipment"><div className="site-shell"><SectionIntro kicker="Equipment" title="Professional Equipment" text="Suitable cutting and drilling equipment for practical site requirements." /><div className="equipment-grid"><ImageFrame src="/images/equipment.png" alt="Professional concrete cutting and drilling equipment" className="equipment-main" /><div className="equipment-list">{[['Core cutting machine', '/images/core-cutting.png'], ['Concrete cutting machine', '/images/slab-cutting.png'], ['Core drilling machine', '/images/ac-hole.png'], ['Wall cutting machine', '/images/wall-cutting.png']].map(([title, image]) => <div className="equipment-item" key={title}><ImageFrame src={image} alt={title} /><strong>{title}</strong></div>)}</div></div></div></section>
 
-      <section className="dark-panel section-padding"><div className="site-shell grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-center"><div><p className="eyebrow text-brand-yellow"><span className="eyebrow-line bg-brand-yellow" /> Simple site process</p><h2 className="section-title text-primary-foreground">Tell us what needs<br /><span className="text-brand-yellow">to be opened.</span></h2><p className="mt-5 max-w-md leading-7 text-primary-foreground/65">Send a quick message with your location, material and approximate opening size. We&apos;ll discuss the right approach for your site.</p><a href={whatsapp} className="btn-yellow mt-8" target="_blank" rel="noreferrer"><MessageCircle size={18} /> Start on WhatsApp</a></div><div className="grid gap-4 sm:grid-cols-3">{[['01','Share details','Send photos, location and dimensions.'],['02','Get the approach','We discuss access, equipment and scope.'],['03','Plan the work','Agree on a suitable site visit or work slot.']].map(([num,title,text]) => <div className="process-step" key={num}><span>{num}</span><h3>{title}</h3><p>{text}</p></div>)}</div></div></section>
+    <section id="projects" className="section projects"><div className="site-shell"><SectionIntro kicker="Project gallery" title="Our Recent Work" text="A selection of concrete cutting and drilling work from active construction sites." /><div className="filters" role="tablist">{categories.map((item) => <button key={item} className={category === item ? 'active' : ''} onClick={() => setCategory(item)}>{item}</button>)}</div><div className="gallery">{filtered.map((item) => <button className="gallery-item" key={item.title} onClick={() => setActive(item)}><ImageFrame src={item.image} alt={item.title} /><span>{item.title}<ArrowRight size={15} /></span></button>)}</div></div></section>
 
-      <section id="equipment" className="section-padding bg-muted/35"><div className="site-shell grid gap-10 lg:grid-cols-[1fr_0.85fr] lg:items-center"><ReplaceableImage label="Equipment image: diamond drilling rig" file="equipment-diamond-drill.jpg" className="equipment-image" /><div><p className="eyebrow"><span className="eyebrow-line" /> Equipment & approach</p><h2 className="section-title">Built for accurate<br />concrete work.</h2><p className="mt-5 leading-7 text-muted-foreground">The jobsite comes first. We select the suitable cutting or drilling setup for the material, access conditions and opening required.</p><ul className="mt-7 grid gap-4 text-sm font-semibold"><li className="flex items-center gap-3"><BadgeCheck className="text-brand-orange" size={20} /> Diamond tooling for reinforced concrete</li><li className="flex items-center gap-3"><BadgeCheck className="text-brand-orange" size={20} /> Controlled work around finished areas</li><li className="flex items-center gap-3"><BadgeCheck className="text-brand-orange" size={20} /> Clear communication before work begins</li></ul></div></div></section>
+    <section id="areas" className="dark-section areas"><div className="site-shell areas-grid"><div><p className="eyebrow yellow"><span /> Service area</p><h2>Serving Miyapur and nearby areas.</h2><p>Based at Nadi Gadda Thanda, Miyapur, Serilingampally, Ranga Reddy, Telangana.</p><p className="landmark"><MapPin size={18} /> Beside Miyapur Metro Station</p></div><div className="area-card"><h3>Local site enquiries welcome</h3><p>Share your exact project location when you contact us so we can understand the requirement.</p><a href="#contact" className="btn btn-yellow">Send an enquiry <ArrowRight size={16} /></a></div></div></section>
 
-      <section id="projects" className="section-padding"><div className="site-shell"><div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end"><SectionIntro kicker="Site work" title="A closer look at the work" text="Replace these image areas with your own project photography when ready." /><a href="#contact" className="hidden btn-secondary sm:inline-flex">Discuss your project <ArrowRight size={16} /></a></div><div className="gallery-grid mt-10">{gallery.map((item, index) => <button key={item.file} onClick={() => setActiveImage(index)} className={`gallery-tile ${item.size}`} aria-label={`View ${item.label}`}><ReplaceableImage label={item.label} file={item.file} /><span className="gallery-caption">{item.label}<ArrowRight size={15} /></span></button>)}</div></div></section>
+    <section className="section about"><div className="site-shell about-grid"><div><p className="eyebrow"><span /> About the business</p><h2>About Navaneeth Core Cutting Service</h2></div><div><p>Navaneeth Core Cutting Service provides core cutting, wall cutting, slab cutting, drilling and concrete cutting services for construction, renovation, AC, plumbing and other site requirements.</p><p>Based in Miyapur, we serve customers in nearby areas with a focus on precise and efficient cutting work.</p></div></div></section>
 
-      <section id="areas" className="dark-panel section-padding"><div className="site-shell grid gap-10 lg:grid-cols-[0.75fr_1.25fr]"><div><p className="eyebrow text-brand-yellow"><span className="eyebrow-line bg-brand-yellow" /> Where we work</p><h2 className="section-title text-primary-foreground">Serving sites<br />across Hyderabad.</h2><p className="mt-5 leading-7 text-primary-foreground/65">Based in Miyapur and available for construction, renovation and services work in surrounding local areas.</p></div><div className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-primary-foreground/15 bg-primary-foreground/15 sm:grid-cols-3">{['Miyapur','Kondapur','Hafeezpet','Chandanagar','Bachupally','Gachibowli'].map(area => <div key={area} className="flex items-center gap-2 bg-primary p-5 text-sm font-semibold text-primary-foreground"><MapPin size={16} className="text-brand-yellow" /> {area}</div>)}</div></div></section>
+    <section id="contact" className="section contact"><div className="site-shell contact-grid"><div><p className="eyebrow"><span /> Contact us</p><h2>Let&apos;s discuss your site requirement.</h2><p>Call or WhatsApp for a quick discussion, or send the enquiry form with your project details.</p><div className="contact-actions"><a href={tel}><Phone size={19} /><span><small>Call Now</small><strong>{phone}</strong></span></a><a href={whatsapp}><MessageCircle size={19} /><span><small>WhatsApp Us</small><strong>Send your requirement</strong></span></a></div></div><form className="contact-form" onSubmit={(event) => { event.preventDefault(); setSent(true) }}><div className="form-row"><label>Name<input required name="name" placeholder="Your name" /></label><label>Phone Number<input required name="phone" type="tel" placeholder="Your phone number" /></label></div><label>Project Location<input required name="location" placeholder="Where is the work located?" /></label><label>Service Required<select required name="service" defaultValue=""><option value="" disabled>Select a service</option>{services.map(([title]) => <option key={title}>{title}</option>)}</select></label><label>Message<textarea name="message" rows={4} placeholder="Tell us about the work you need..." /></label><button className="btn btn-dark" type="submit"><Send size={17} /> {sent ? 'Enquiry sent' : 'Send Enquiry'}</button>{sent && <p className="form-success" role="status"><Check size={16} /> Thank you. We will get back to you.</p>}</form></div></section>
 
-      <section id="contact" className="section-padding"><div className="site-shell grid gap-12 lg:grid-cols-[0.8fr_1.2fr]"><div><p className="eyebrow"><span className="eyebrow-line" /> Start your enquiry</p><h2 className="section-title">Let&apos;s talk<br />about your site.</h2><p className="mt-5 max-w-md leading-7 text-muted-foreground">A few details are enough to get started. For the fastest response, call or message us directly.</p><div className="mt-8 grid gap-4"><a className="contact-link" href={`tel:${phone.replaceAll(' ', '')}`}><span className="contact-icon"><Phone size={19} /></span><span><small>Call directly</small><strong>{phone}</strong></span></a><a className="contact-link" href={whatsapp}><span className="contact-icon bg-brand-yellow text-primary"><MessageCircle size={19} /></span><span><small>Message on WhatsApp</small><strong>Send project details</strong></span></a><div className="contact-link"><span className="contact-icon bg-muted text-primary"><Clock3 size={19} /></span><span><small>Response</small><strong>Share your preferred work window</strong></span></div></div></div><form className="contact-form" onSubmit={(event) => { event.preventDefault(); setSent(true) }}><div className="grid gap-5 sm:grid-cols-2"><label>Name<input required name="name" placeholder="Your name" /></label><label>Phone number<input required name="phone" type="tel" placeholder="Your phone number" /></label></div><label>Project location<input required name="location" placeholder="e.g. Miyapur, Hyderabad" /></label><label>What do you need help with?<textarea required name="message" rows={5} placeholder="Tell us about the opening, material or drilling requirement..." /></label><button className="btn-primary w-full justify-center sm:w-auto" type="submit"><Send size={17} /> {sent ? 'Enquiry noted' : 'Send enquiry'}</button>{sent && <p className="text-sm font-semibold text-brand-orange" role="status">Thanks — we&apos;ll review your requirement and get back to you.</p>}</form></div></section>
-
-      <footer className="border-t border-border bg-muted/35 py-8"><div className="site-shell flex flex-col justify-between gap-5 text-sm text-muted-foreground sm:flex-row sm:items-center"><div><strong className="font-heading text-foreground">NAVANEETH CORE CUTTING SERVICE</strong><p className="mt-1">Miyapur, Hyderabad · Concrete cutting & drilling</p></div><p>© {new Date().getFullYear()} Navaneeth Core Cutting Service</p></div></footer>
-
-      <a className="floating-whatsapp" href={whatsapp} target="_blank" rel="noreferrer" aria-label="Chat on WhatsApp"><MessageCircle size={23} /></a><a className="floating-call" href={`tel:${phone.replaceAll(' ', '')}`} aria-label="Call Navaneeth Core Cutting Service"><Phone size={20} /></a>
-
-      {activeImage !== null && <div className="lightbox" role="dialog" aria-modal="true" aria-label="Project image preview" onClick={() => setActiveImage(null)}><div onClick={(event) => event.stopPropagation()} className="lightbox-card"><ReplaceableImage label={gallery[activeImage].label} file={gallery[activeImage].file} /><button onClick={() => setActiveImage(null)} className="lightbox-close" aria-label="Close preview"><X /></button><p>{gallery[activeImage].label}</p></div></div>}
-    </main>
-  )
+    <footer><div className="site-shell footer-inner"><div><strong>NAVANEETH CORE CUTTING SERVICE</strong><p>Nadi Gadda Thanda, Miyapur, Telangana</p></div><p>© {new Date().getFullYear()} Navaneeth Core Cutting Service</p></div></footer>
+    <a className="floating-call" href={tel} aria-label="Call Now"><Phone size={20} /></a><a className="floating-whatsapp" href={whatsapp} target="_blank" rel="noreferrer" aria-label="WhatsApp Us"><MessageCircle size={23} /></a>
+    {active && <div className="lightbox" role="dialog" aria-modal="true" aria-label={active.title} onClick={() => setActive(null)}><div className="lightbox-card" onClick={(event) => event.stopPropagation()}><ImageFrame src={active.image} alt={active.title} /><button onClick={() => setActive(null)} aria-label="Close image"><X /></button><p>{active.title}</p></div></div>}
+  </main>
 }
 
-function ReplaceableImage({ label, file, className = '' }: { label: string; file: string; className?: string }) {
-  return <div className={`replaceable-image ${className}`} role="img" aria-label={`${label}. Replace with ${file}`}><div className="image-grid" /><div className="image-copy"><span className="image-kicker">Replaceable photo area</span><strong>{label}</strong><small>{file}</small></div><span className="image-corner" /></div>
-}
-
-function SectionIntro({ kicker, title, text }: { kicker: string; title: string; text: string }) {
-  return <div className="max-w-xl"><p className="eyebrow"><span className="eyebrow-line" /> {kicker}</p><h2 className="section-title mt-3">{title}</h2><p className="mt-4 leading-7 text-muted-foreground">{text}</p></div>
-}
+function ImageFrame({ src, alt, className = '' }: { src: string; alt: string; className?: string }) { return <div className={`image-frame ${className}`}><img src={src} alt={alt} /></div> }
+function SectionIntro({ kicker, title, text }: { kicker: string; title: string; text: string }) { return <div className="section-intro"><p className="eyebrow"><span /> {kicker}</p><h2>{title}</h2><p>{text}</p></div> }
